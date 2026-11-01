@@ -30,9 +30,11 @@ public class DiseaseDetectionService {
         this.repository = repository;
     }
 
-    // Detect disease using Python AI service
+    // Detect disease using the selected AI model
     public Map<String, Object> detectDisease(
-            MultipartFile file, Long farmerId) throws IOException {
+            MultipartFile file,
+            Long farmerId,
+            String plant) throws IOException {
 
         ByteArrayResource imageResource =
                 new ByteArrayResource(file.getBytes()) {
@@ -48,6 +50,11 @@ public class DiseaseDetectionService {
                 new LinkedMultiValueMap<>();
 
         body.add("file", imageResource);
+
+        // Send plant name to Python AI service
+        if (plant != null && !plant.isBlank()) {
+            body.add("plant", plant);
+        }
 
         Map<String, Object> result = restClient.post()
                 .uri("http://localhost:8000/predict")
@@ -74,8 +81,13 @@ public class DiseaseDetectionService {
                     ((Number) confidence).doubleValue());
         }
 
-        String plant = (String) result.get("plant");
+        String predictedPlant = (String) result.get("plant");
         String disease = (String) result.get("disease");
+
+        // Use the selected plant if Python has not returned it
+        if (predictedPlant == null || predictedPlant.isBlank()) {
+            predictedPlant = plant;
+        }
 
         // Get top prediction when the result is uncertain
         if (disease == null && result.get("predictions") instanceof List) {
@@ -92,12 +104,12 @@ public class DiseaseDetectionService {
             }
         }
 
-        if (plant == null && disease != null
+        if (predictedPlant == null && disease != null
                 && disease.contains("___")) {
-            plant = disease.split("___", 2)[0];
+            predictedPlant = disease.split("___", 2)[0];
         }
 
-        detection.setPlant(plant);
+        detection.setPlant(predictedPlant);
         detection.setPredictedDisease(disease);
 
         repository.save(detection);

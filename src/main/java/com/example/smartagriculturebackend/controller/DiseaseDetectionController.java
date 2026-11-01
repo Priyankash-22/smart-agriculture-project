@@ -24,23 +24,25 @@ public class DiseaseDetectionController {
         this.diseaseDetectionService = diseaseDetectionService;
     }
 
-    // Upload image and predict disease
+    // Detect disease
     @PostMapping(
             value = "/predict",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<Map<String, Object>> detectDisease(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("farmerId") Long farmerId)
+            @RequestParam("farmerId") Long farmerId,
+            @RequestParam(value = "plant", required = false) String plant)
             throws IOException {
 
         Map<String, Object> result =
-                diseaseDetectionService.detectDisease(file, farmerId);
+                diseaseDetectionService.detectDisease(
+                        file, farmerId, plant);
 
         return ResponseEntity.ok(result);
     }
 
-    // Retrieve farmer history with disease information
+    // Get farmer disease detection history
     @GetMapping("/history/{farmerId}")
     public ResponseEntity<List<Map<String, Object>>> getHistory(
             @PathVariable Long farmerId) {
