@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Python AI service
+disease-ai-service/venv/
+disease-ai-service/__pycache__/
+disease-ai-service/*.pyc
+disease-ai-service/.env

@@ -1,4 +1,4 @@
-
+from urllib.parse import unquote
 DISEASE_INFORMATION = {
 
     "Apple___Apple_scab": {
@@ -334,6 +334,8 @@ DISEASE_INFORMATION = {
         "management": ["Remove infected plants according to local guidance.", "Disinfect tools.", "Use clean seeds and maintain field hygiene."]
     },
 
+   
+    
     "Tomato___healthy": {
         "plant": "Tomato",
         "condition": "Healthy",
@@ -341,11 +343,153 @@ DISEASE_INFORMATION = {
         "description": "The image is classified as a healthy tomato leaf.",
         "symptoms": [],
         "management": ["Continue regular crop monitoring.", "Maintain proper irrigation and nutrition."]
+    },
+
+    # Rice disease information
+
+    "Bacterial Leaf Blight": {
+        "plant": "Rice",
+        "condition": "Bacterial Leaf Blight",
+        "status": "disease",
+        "description": "A bacterial disease that affects rice leaves and can reduce crop growth and yield.",
+        "symptoms": [
+            "Yellowing along leaf edges",
+            "Wavy, yellow to white lesions",
+            "Drying of affected leaves"
+        ],
+        "management": [
+            "Use healthy seeds and resistant rice varieties where available.",
+            "Maintain proper field drainage.",
+            "Avoid excessive nitrogen fertilizer.",
+            "Follow local agricultural disease management advice."
+        ]
+    },
+
+    "Brown Spot": {
+        "plant": "Rice",
+        "condition": "Brown Spot",
+        "status": "disease",
+        "description": "A fungal disease that causes brown spots on rice leaves.",
+        "symptoms": [
+            "Small circular or oval brown spots",
+            "Yellow halos around some spots",
+            "Dark lesions on leaves"
+        ],
+        "management": [
+            "Use healthy seeds.",
+            "Maintain balanced soil nutrition.",
+            "Remove heavily infected plant residues.",
+            "Follow locally recommended disease management practices."
+        ]
+    },
+
+    "Healthy Rice Leaf": {
+        "plant": "Rice",
+        "condition": "Healthy",
+        "status": "healthy",
+        "description": "The image is classified as a healthy rice leaf.",
+        "symptoms": [],
+        "management": [
+            "Continue regular crop monitoring.",
+            "Maintain proper irrigation and nutrition."
+        ]
+    },
+
+    "Leaf Blast": {
+        "plant": "Rice",
+        "condition": "Leaf Blast",
+        "status": "disease",
+        "description": "A fungal disease that affects rice leaves and may cause serious crop damage.",
+        "symptoms": [
+            "Spindle-shaped leaf lesions",
+            "Gray or whitish centers with dark borders",
+            "Drying of affected leaves"
+        ],
+        "management": [
+            "Grow resistant varieties where available.",
+            "Avoid excessive nitrogen application.",
+            "Maintain suitable field water management.",
+            "Consult an agricultural expert for local treatment recommendations."
+        ]
+    },
+
+    "Leaf scald": {
+        "plant": "Rice",
+        "condition": "Leaf Scald",
+        "status": "disease",
+        "description": "A fungal disease that causes scald-like lesions on rice leaves.",
+        "symptoms": [
+            "Brown or gray lesions near leaf tips",
+            "Scalded or burned-looking leaf areas",
+            "Drying of leaf edges"
+        ],
+        "management": [
+            "Use healthy seeds and suitable varieties.",
+            "Remove infected crop residues where practical.",
+            "Maintain balanced fertilizer application.",
+            "Follow local agricultural recommendations."
+        ]
+    },
+
+    "Narrow Brown Leaf Spot": {
+        "plant": "Rice",
+        "condition": "Narrow Brown Leaf Spot",
+        "status": "disease",
+        "description": "A fungal disease that produces narrow brown lesions on rice leaves.",
+        "symptoms": [
+            "Narrow, elongated brown spots",
+            "Brown streaks along leaf veins",
+            "Drying of affected leaf areas"
+        ],
+        "management": [
+            "Maintain balanced soil nutrition.",
+            "Use healthy seeds.",
+            "Manage infected crop residues.",
+            "Seek local agricultural advice for severe infections."
+        ]
+    },
+
+    "Rice Hispa": {
+        "plant": "Rice",
+        "condition": "Rice Hispa",
+        "status": "pest",
+        "description": "An insect pest whose adults and grubs damage rice leaves.",
+        "symptoms": [
+            "White parallel feeding streaks on leaves",
+            "Scraped leaf surfaces",
+            "Whitish or damaged patches on leaves"
+        ],
+        "management": [
+            "Monitor the crop regularly for adult beetles and damaged leaves.",
+            "Remove heavily infested leaves where practical.",
+            "Maintain field sanitation.",
+            "Use locally recommended integrated pest management practices."
+        ]
+    },
+
+    "Sheath Blight": {
+        "plant": "Rice",
+        "condition": "Sheath Blight",
+        "status": "disease",
+        "description": "A fungal disease that affects rice leaf sheaths and can spread to leaves.",
+        "symptoms": [
+            "Oval or irregular greenish-gray lesions on leaf sheaths",
+            "Lesions with brown margins",
+            "Drying of affected leaves"
+        ],
+        "management": [
+            "Avoid excessive nitrogen fertilizer.",
+            "Maintain suitable plant spacing.",
+            "Manage infected crop residues.",
+            "Follow local agricultural disease management advice."
+        ]
     }
 }
 
-
 def get_disease_information(disease_name):
+
+    disease_name = unquote(disease_name)
+
     return DISEASE_INFORMATION.get(
         disease_name,
         {
@@ -359,3 +503,5 @@ def get_disease_information(disease_name):
             ]
         }
     )
+
+
